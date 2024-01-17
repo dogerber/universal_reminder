@@ -25,8 +25,8 @@ The device uses a eInk display and enters deep sleep in between tasks, to save a
 
 
 ## How to build
-- Connect wires as shown in TODO
-- 3D print enclosure from /3D_print
+- Connect wires as shown [here](img/wiring_diagram.png)
+- 3D print enclosure from (/3D_print)
 - Install these libraries:
 	- [RTClib](https://github.com/adafruit/RTClib)
 	- [Adafruit EPD](https://github.com/adafruit/Adafruit_EPD)
