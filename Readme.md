@@ -20,13 +20,13 @@ The device uses a eInk display and enters deep sleep in between tasks, to save a
 
 <details> 
   <summary>Wiring diagram (click to open)</summary>
-  ![wiring_diagram](img/wiring_diagram.png)
+   <img src="https://github.com/dogerber/universal_reminder/blob/main/img/wiring_diagram.png" />
 </details><br>
 
 
 ## How to build
 - Connect wires as shown [here](img/wiring_diagram.png)
-- 3D print enclosure from (/3D_print)
+- 3D print enclosure from [/3D_print](/3D_print)
 - Install these libraries:
 	- [RTClib](https://github.com/adafruit/RTClib)
 	- [Adafruit EPD](https://github.com/adafruit/Adafruit_EPD)
