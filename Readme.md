@@ -32,9 +32,9 @@ The device uses a eInk display and enters deep sleep in between tasks, to save a
 	- [Adafruit EPD](https://github.com/adafruit/Adafruit_EPD)
 	- [Adafruit GFX and Adafruit GFX library](https://github.com/adafruit/Adafruit-GFX-Library)
 	- [Arduino Low Power](https://github.com/arduino-libraries/ArduinoLowPower)
-- Set time on RTC with this script TODO
+- Set time on RTC with this script [```set_RTC.ino```](code/set_RTC/set_RTC.ino)
 - adjust the messages (``str_*``) and ```times[]``` for the tasks in [```universal_reminder.ino```](code/universal_reminder/universal_reminder.ino)
-- upload ```universal_reminder.ino```
+- upload [```universal_reminder.ino```](code/universal_reminder/universal_reminder.ino)
 
 
 ## Troubleshooting
