@@ -20,7 +20,7 @@ The device uses a eInk display and enters deep sleep in between tasks, to save a
 
 <details> 
   <summary>Wiring diagram (click to open)</summary>
-  todo1
+  ![wiring_diagram](img/wiring_diagram.png)
 </details><br>
 
 
@@ -33,7 +33,7 @@ The device uses a eInk display and enters deep sleep in between tasks, to save a
 	- [Adafruit GFX and Adafruit GFX library](https://github.com/adafruit/Adafruit-GFX-Library)
 	- [Arduino Low Power](https://github.com/arduino-libraries/ArduinoLowPower)
 - Set time on RTC with this script TODO
-- adjust the messages (``str_all_done``) and ```times``` for the tasks in ```universal_reminder.ino```
+- adjust the messages (``str_*``) and ```times[]``` for the tasks in ```universal_reminder.ino```
 - upload ```universal_reminder.ino```
 
 
