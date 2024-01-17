@@ -1,5 +1,6 @@
 /*
   Universal Reminder by Dominic Gerber
+  see also: https://github.com/dogerber/universal_reminder
 
   Displays the current date and if a task has already been done or not. Tasks are triggered by times of the day.
   In between the device goes to sleep to save energy. 
@@ -44,7 +45,7 @@ int tasks_to_do_before = tasks_to_do;
 int time_to_wait_min = 0;
 
 
-int times[] = { 1, 800, 900,1600,1700 };  // times where doing needs to be done, Represented as HHMM, in ascending order
+int times[] = { 1};  // times where doing needs to be done, Represented as HHMM, in ascending order
 // swissgerman char daysOfTheWeek[7][12] = { "Sunntig", "Maentig", "Zistig", "Mittwuch", "Dunnstig", "Fritig", "Samstig" };
 char daysOfTheWeek[7][12] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
@@ -181,9 +182,8 @@ void setup() {
   display.setCursor(10, 64);
   display.print("Universal Reminder");
   display.setCursor(20, 84);
-  display.print("www.github.com/dogerber/universal_reminder");
   display.display();
-  delay(1000);
+  delay(500);
 
   // Infos to Serial
   Serial.println("");
@@ -229,8 +229,8 @@ void loop() {
   tilt_sensor_state = digitalRead(PIN_TILT_SENSOR);
   update_display();
 
-  delay(3000); //todo remove
-  //LowPower.deepSleep(time_to_wait_min*60*1000);
+  //delay(6000); //for debugging
+  LowPower.deepSleep(time_to_wait_min*60*1000);
 }
 
 
