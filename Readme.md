@@ -1,8 +1,6 @@
-
-# Universal reminder
-
 ![splash](img/splash.gif)
 
+# Universal reminder
 Did I already take these pills today? Did I water the plants already? This device helps you track repetitive tasks. Set the times of day something needs doing and the message that should be displayed. When the task is done, shake the device to make the screen display, that it is done. The device will reset when the next task is due.
 
 The device uses a eInk display and enters deep sleep in between tasks, to save as much energy as possible. 
