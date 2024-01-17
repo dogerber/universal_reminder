@@ -1,9 +1,9 @@
 
 # Universal reminder
 
-TODO - Video
+![splash](img/splash.gif)
 
-Did I already take these pills? Did I water the plants today? This device helps you track repetitive tasks. Set the times of day something needs doing and the message that should be displayed. When the task is done, shake the device to make the screen display, that it is done. The device will reset when the next task is due.
+Did I already take these pills today? Did I water the plants already? This device helps you track repetitive tasks. Set the times of day something needs doing and the message that should be displayed. When the task is done, shake the device to make the screen display, that it is done. The device will reset when the next task is due.
 
 The device uses a eInk display and enters deep sleep in between tasks, to save as much energy as possible. 
 
@@ -21,7 +21,7 @@ The device uses a eInk display and enters deep sleep in between tasks, to save a
 <details> 
   <summary>Wiring diagram (click to open)</summary>
    <img src="https://github.com/dogerber/universal_reminder/blob/main/img/wiring_diagram.png" />
-</details><br>
+</details>
 
 
 ## How to build
@@ -33,7 +33,7 @@ The device uses a eInk display and enters deep sleep in between tasks, to save a
 	- [Adafruit GFX and Adafruit GFX library](https://github.com/adafruit/Adafruit-GFX-Library)
 	- [Arduino Low Power](https://github.com/arduino-libraries/ArduinoLowPower)
 - Set time on RTC with this script [```set_RTC.ino```](code/set_RTC/set_RTC.ino)
-- adjust the messages (``str_*``) and ```times[]``` for the tasks in [```universal_reminder.ino```](code/universal_reminder/universal_reminder.ino)
+- adjust the messages (``str_*``) and ```times[]``` for the tasks in [```universal_reminder.ino```](code/universal_reminder/universal_reminder.ino). Times are set as HHMM, so for example 13:45 becomes 1345 in the code.
 - upload [```universal_reminder.ino```](code/universal_reminder/universal_reminder.ino)
 
 
