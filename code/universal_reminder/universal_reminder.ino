@@ -4,7 +4,6 @@
 
   Displays the current date and if a task has already been done or not. Tasks are triggered by times of the day.
   In between the device goes to sleep to save energy. 
-
 */
 
 #include "ArduinoLowPower.h"    // for deep sleep
@@ -143,7 +142,6 @@ void update_display() {
     // reset flags
     tasks_to_do_before = tasks_to_do;
 
-
     display.display();
   }
 
@@ -177,10 +175,9 @@ void setup() {
       ;
   }
 
-
   // display welcome message
   display.setCursor(10, 64);
-  display.print("Universal Reminder");
+  display.print("Universal Reminder v1.0");
   display.setCursor(20, 84);
   display.display();
   delay(500);
@@ -201,6 +198,7 @@ void loop() {
     if (tasks_to_do > 2) { tasks_to_do = 2; }  // cap to prevent refreshes
   } else {
     // loop started through interrupt, do no tadd a task
+    woke_through_interrupt = false; // reset flag
   }
 
 
