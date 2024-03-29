@@ -1,9 +1,10 @@
 ![splash](img/splash.gif)
 
 # Universal reminder
+
 Did I already take these pills today? Did I water the plants already? This device helps you track repetitive tasks. Set the times of day something needs doing and the message that should be displayed. When the task is done, shake the device to make the screen display, that it is done. The device will reset when the next task is due.
 
-The device uses a eInk display and enters deep sleep in between tasks, to save as much energy as possible. 
+The device uses a eInk display and enters deep sleep in between tasks, to save as much energy as possible.
 
 ## Used parts
 
@@ -21,23 +22,28 @@ The device uses a eInk display and enters deep sleep in between tasks, to save a
    <img src="https://github.com/dogerber/universal_reminder/blob/main/img/wiring_diagram.png" />
 </details>
 
-
 ## How to build
+
 - Connect wires as shown [here](img/wiring_diagram.png)
 - 3D print enclosure from [/3D_print](/3D_print)
 - Install these libraries:
-	- [RTClib](https://github.com/adafruit/RTClib)
-	- [Adafruit EPD](https://github.com/adafruit/Adafruit_EPD)
-	- [Adafruit GFX and Adafruit GFX library](https://github.com/adafruit/Adafruit-GFX-Library)
-	- [Arduino Low Power](https://github.com/arduino-libraries/ArduinoLowPower)
-- Set time on RTC with this script [```set_RTC.ino```](code/set_RTC/set_RTC.ino)
-- adjust the messages (``str_*``) and ```times[]``` for the tasks in [```universal_reminder.ino```](code/universal_reminder/universal_reminder.ino). Times are set as HHMM, so for example 13:45 becomes 1345 in the code.
-- upload [```universal_reminder.ino```](code/universal_reminder/universal_reminder.ino)
-
+  - [RTClib](https://github.com/adafruit/RTClib)
+  - [Adafruit EPD](https://github.com/adafruit/Adafruit_EPD)
+  - [Adafruit GFX and Adafruit GFX library](https://github.com/adafruit/Adafruit-GFX-Library)
+  - [Arduino Low Power](https://github.com/arduino-libraries/ArduinoLowPower)
+- Set time on RTC with this script [`set_RTC.ino`](code/set_RTC/set_RTC.ino)
+- adjust the messages (`str_*`) and `times[]` for the tasks in [`universal_reminder.ino`](code/universal_reminder/universal_reminder.ino). Times are set as HHMM, so for example 13:45 becomes 1345 in the code.
+- upload [`universal_reminder.ino`](code/universal_reminder/universal_reminder.ino)
 
 ## Troubleshooting
+
 If the device every becomes unrepsonsive (can not upload code and power LED does not switch on), double-click the reset button and upload the basic "Blink" example. This always happens when the device enters deep sleep, so for trouble shooting replace deep sleep with a simple delay().
 
+## Known issues
+
+The screen becomes grainy after some time. I don't know what is causing this.
+
 ## Resources
+
 - [Arduino Guide to low power design](https://docs.arduino.cc/learn/electronics/low-power)
 - [Good resource on interrupts by Nick Gammon](http://gammon.com.au/interrupts)

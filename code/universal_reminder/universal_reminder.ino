@@ -7,7 +7,7 @@
 
 */
 
-#include "ArduinoLowPower.h"    // for deep sleep
+#include "ArduinoLowPower.h"    // for deep sleep, see https://www.arduino.cc/reference/en/libraries/arduino-low-power/
 #include "Adafruit_ThinkInk.h"  // for the eInk screen
 #include <Wire.h>
 #include <RTClib.h>  // for RTC
@@ -28,6 +28,7 @@
 #include <Fonts/FreeSansBold9pt7b.h>
 
 ThinkInk_290_Grayscale4_T5 display(EPD_DC, EPD_RESET, EPD_CS, SRAM_CS, EPD_BUSY);
+
 RTC_PCF8523 rtc;  // real time clock object
 
 
@@ -35,29 +36,27 @@ RTC_PCF8523 rtc;  // real time clock object
 const int PIN_TILT_SENSOR = 5;
 
 // variables
-bool woke_through_interrupt = false;
-int tasks_to_do = 0;
-
-
-volatile int tilt_sensor_state = 1;
-int tilt_sensor_state_before = 0;
-int tasks_to_do_before = tasks_to_do;
+volatile bool woke_through_interrupt = false;
+volatile int tasks_to_do = 0;
+volatile int tasks_to_do_before = -1;
 int time_to_wait_min = 0;
 
+int times[] = { 500,};  // times where doing needs to be done, Represented as HHMM, in ascending order
 
-int times[] = { 1};  // times where doing needs to be done, Represented as HHMM, in ascending order
+
 // swissgerman char daysOfTheWeek[7][12] = { "Sunntig", "Maentig", "Zistig", "Mittwuch", "Dunnstig", "Fritig", "Samstig" };
 char daysOfTheWeek[7][12] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
-// messages
+// messages to display
 char str_all_done[] = "[x] all tasks done";
 char str_one_undone[] = "[ ] one task undone";
 char str_multiple_undone[] = "[[  ]] multiple tasks undone";
 
 
+
 void change_detected() {
   // called on interrupt through the tilt sensor
-  if (!woke_through_interrupt) {
+  if (!woke_through_interrupt && tasks_to_do !=0) {
     woke_through_interrupt = true;
     tasks_to_do = 0;
   }
@@ -66,8 +65,8 @@ void change_detected() {
 
 // Function to find the closest time in the future from the given time, input in HHMM
 int findClosestTime(int currentTime) {
-  int closestTime = -1;       // -1 for no times in the future
-  int timeDifference = 2500; 
+  int closestTime = -1;  // return -1 for no times in the future
+  int timeDifference = 2500;
 
   for (int i = 0; i < sizeof(times) / sizeof(times[0]); i++) {
     int tempDifference = times[i] - currentTime;
@@ -83,9 +82,9 @@ int findClosestTime(int currentTime) {
 
 void update_display() {
   // check if anything changed
-  if (tasks_to_do != tasks_to_do_before) {
-    woke_through_interrupt = true; // prevents interruption (?)
-    display.clearBuffer();  // clear screen
+  if (true) { //was: tasks_to_do != tasks_to_do_before
+    woke_through_interrupt = true;  // prevents interruption (?)
+    display.clearBuffer();          // clear screen
 
     // print date on display
     if (true) {
@@ -119,30 +118,63 @@ void update_display() {
       display.println(str_multiple_undone);
     }
 
+
+
     // add info for next wakeup
-    if (true) {
+    if (true) {  //todo add tasks_to_do == 0 &&
       // determine next time
       DateTime now = rtc.now();
       DateTime next_task = now + TimeSpan(0, time_to_wait_min / 60, time_to_wait_min % 60, 0);
 
       // write to screen
-      if (tasks_to_do == 0 && true) {
-        display.setCursor(30, 120);
-        display.setFont(&FONT_NAME);
-        display.print(" next task: ");
-        if (now.day() != next_task.day()) {
-          display.print("tomorrow, ");
-        }
-        display.print(next_task.hour());
+      display.setCursor(30, 120);
+      display.setFont(&FONT_NAME);
+      display.print(" next task: ");
+      if (now.day() != next_task.day()) {
+        display.print("tomorrow, ");
+      }
+      display.print(next_task.hour());
+      display.print(":");
+      if (next_task.minute() < 10) { display.print("0"); }
+      display.print(next_task.minute());
+
+      // write when last updated
+      if (false) {
+        display.setCursor(30, 90);
+        display.print("last done:");
+        display.print(daysOfTheWeek[now.dayOfTheWeek()]);
+        display.print(" - ");
+        display.print(now.day());
+        display.print(".");
+        display.print(now.month());
+        display.print(".");
+        display.print(now.hour());
         display.print(":");
-        if (next_task.minute() < 10) { display.print("0"); }
-        display.print(next_task.minute());
+        display.print(now.minute());
+      }
+
+      // debug: output informations
+      if (false) {
+        display.setCursor(30, 90);
+        display.setFont(&FONT_NAME);
+        display.print("upd");
+        display.print(now.hour());
+        display.print(":");
+        display.print(now.minute());
+        display.print(", wait");
+        display.print(time_to_wait_min);
+        display.print(", ttd");
+        display.print(tasks_to_do);
+        display.print(", ttdb");
+        display.print(tasks_to_do_before);
       }
     }
 
+
+
+
     // reset flags
     tasks_to_do_before = tasks_to_do;
-
 
     display.display();
   }
@@ -156,6 +188,8 @@ void setup() {
 
   // set pin Modes
   pinMode(PIN_TILT_SENSOR, INPUT);
+  // initialize digital pin LED_BUILTIN as an output.
+  pinMode(LED_BUILTIN, OUTPUT);
 
   // Attach a wakeup interrupt for tilt sensor
   LowPower.attachInterruptWakeup(digitalPinToInterrupt(PIN_TILT_SENSOR), change_detected, CHANGE);
@@ -177,10 +211,9 @@ void setup() {
       ;
   }
 
-
   // display welcome message
   display.setCursor(10, 64);
-  display.print("Universal Reminder");
+  display.print("Universal Reminder v1.0");
   display.setCursor(20, 84);
   display.display();
   delay(500);
@@ -195,14 +228,14 @@ void setup() {
 
 
 void loop() {
-
+  digitalWrite(LED_BUILTIN, HIGH);
   if (!woke_through_interrupt) {
     tasks_to_do++;
     if (tasks_to_do > 2) { tasks_to_do = 2; }  // cap to prevent refreshes
   } else {
     // loop started through interrupt, do no tadd a task
+    woke_through_interrupt = false;  // reset flag
   }
-
 
   // get time from rtc
   DateTime now = rtc.now();
@@ -215,22 +248,18 @@ void loop() {
   // Find the closest time in the future
   int closestTime = findClosestTime(currentTime);
 
-  // Calculate how long to wait
+  // handle case where no more reminders for today
   if (closestTime < 0) {
-    Serial.println("No more reminders for today");
     closestTime = 2400 + times[0];
   }
 
   // calculate time to wait for next scheduled task
   time_to_wait_min = (closestTime / 100 - currentTime / 100) * 60 + (closestTime % 100 - currentTime % 100);
 
-
   // update screen
-  tilt_sensor_state = digitalRead(PIN_TILT_SENSOR);
   update_display();
 
-  //delay(6000); //for debugging
-  LowPower.deepSleep(time_to_wait_min*60*1000);
+  //delay(6000);  //for debugging
+  digitalWrite(LED_BUILTIN, LOW);
+  LowPower.deepSleep(time_to_wait_min * 60 * 1000);
 }
-
-
