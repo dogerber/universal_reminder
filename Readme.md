@@ -26,6 +26,7 @@ The device uses a eInk display and enters deep sleep in between tasks, to save a
 
 - Connect wires as shown [here](img/wiring_diagram.png)
 - 3D print enclosure from [/3D_print](/3D_print)
+- make sure that the tilt sensor is pointing downwards in the enclosure (wires upwards)
 - Install these libraries:
   - [RTClib](https://github.com/adafruit/RTClib)
   - [Adafruit EPD](https://github.com/adafruit/Adafruit_EPD)
@@ -41,7 +42,8 @@ If the device every becomes unrepsonsive (can not upload code and power LED does
 
 ## Known issues
 
-The screen becomes grainy after some time. I don't know what is causing this.
+- The screen becomes grainy after some time. I don't know what is causing this.
+- sometimes shaking the device resets the counter to 1 instead of 0.
 
 ## Resources
 
