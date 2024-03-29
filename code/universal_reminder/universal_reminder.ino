@@ -4,7 +4,6 @@
 
   Displays the current date and if a task has already been done or not. Tasks are triggered by times of the day.
   In between the device goes to sleep to save energy. 
-
 */
 
 #include "ArduinoLowPower.h"    // for deep sleep, see https://www.arduino.cc/reference/en/libraries/arduino-low-power/
@@ -234,7 +233,11 @@ void loop() {
     if (tasks_to_do > 2) { tasks_to_do = 2; }  // cap to prevent refreshes
   } else {
     // loop started through interrupt, do no tadd a task
+<<<<<<< HEAD
     woke_through_interrupt = false;  // reset flag
+=======
+    woke_through_interrupt = false; // reset flag
+>>>>>>> 0b7f7f53a27ccd6c19c0a016620ad6031855e2a6
   }
 
   // get time from rtc
